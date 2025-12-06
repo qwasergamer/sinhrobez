@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="icon" href="images/logo.ico"><!-- 32×32 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Требования - Синхро-Безопасность</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Чердак -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-contacts">
+                <div class="top-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+7 (919) 157-79-00</span>
+                </div>
+                <div class="top-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>vladimir_minkov@mail.ru</span>
+                </div>
+            </div>
+            <a href="contacts.html#demo" class="top-cta">Заказать демо</a>
+        </div>
+    </div>
+
+    <!-- Шапка -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">СБ</div>
+                    <div class="logo-text">
+                        <h1>Синхро-Безопасность</h1>
+                        <p class="tagline">Промышленная автоматизация контроля доступа</p>
+                    </div>
+                </a>
+                <nav class="main-nav" id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i>Главная</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i>О продукте</a></li>
+                        <li><a href="features.html"><i class="fas fa-star"></i>Возможности</a></li>
+                        <li><a href="technology.html"><i class="fas fa-cogs"></i>Технологии</a></li>
+                        <li><a href="requirements.html" class="active"><i class="fas fa-server"></i>Требования</a></li>
+                    </ul>
+                </nav>
+                <button class="side-menu-btn" id="sideMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Боковое меню -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>Все разделы</h3>
+            <button class="close-side-menu" id="closeSideMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="side-menu-nav">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i>Главная</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i>О продукте</a></li>
+                <li><a href="features.html"><i class="fas fa-star"></i>Возможности</a></li>
+                <li><a href="technology.html"><i class="fas fa-cogs"></i>Технологии</a></li>
+                <li><a href="requirements.html"><i class="fas fa-server"></i>Требования</a></li>
+                <li><a href="installation.html"><i class="fas fa-download"></i>Установка</a></li>
+                <li><a href="docs.html"><i class="fas fa-book"></i>Документация</a></li>
+                <li><a href="contacts.html"><i class="fas fa-phone"></i>Контакты</a></li>
+                <li><a href="download.html"><i class="fas fa-file-download"></i>Скачать</a></li>
+                <li><a href="support.html"><i class="fas fa-headset"></i>Поддержка</a></li>
+                <li><a href="integration.html"><i class="fas fa-link"></i>Интеграция</a></li>
+                <li><a href="privacy.html"><i class="fas fa-shield-alt"></i>Политика</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Требования</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Главная</a> / <span>Требования</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержимое страницы -->
+    <section class="content-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="color: var(--oil-dark); margin-bottom: 20px; font-size: 2rem;">
+                    Системные требования
+                </h2>
+                <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: var(--oil-steel);">
+                    Технические требования для успешного внедрения и работы модуля Синхро-Безопасность
+                </p>
+            </div>
+
+            <!-- Серверные требования -->
+            <div style="margin-bottom: 60px;">
+                <h3 style="color: var(--oil-dark); margin-bottom: 30px; text-align: center;">
+                    <i class="fas fa-server" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                    Требования к серверу
+                </h3>
+                
+                <table class="requirements-table">
+                    <thead>
+                        <tr>
+                            <th>Компонент</th>
+                            <th>Минимальные требования</th>
+                            <th>Рекомендуемые требования</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Операционная система</td>
+                            <td>Windows Server 2012 R2<br>RedOS 7.3</td>
+                            <td>Windows Server 2019/2022<br>RedOS 8.x / Альт Linux 10</td>
+                        </tr>
+                        <tr>
+                            <td>Процессор</td>
+                            <td>2 ядра, 2.0 GHz</td>
+                            <td>4+ ядер, 2.5+ GHz</td>
+                        </tr>
+                        <tr>
+                            <td>Оперативная память</td>
+                            <td>4 GB</td>
+                            <td>8+ GB (16 GB для 5000+ пользователей)</td>
+                        </tr>
+                        <tr>
+                            <td>Дисковое пространство</td>
+                            <td>10 GB свободного места</td>
+                            <td>50+ GB SSD</td>
+                        </tr>
+                        <tr>
+                            <td>Сетевое подключение</td>
+                            <td>1 GbE к доменным контроллерам</td>
+                            <td>10 GbE для больших предприятий</td>
+                        </tr>
+                        <tr>
+                            <td>Дополнительное ПО</td>
+                            <td>.NET Framework 4.8<br>PowerShell 5.1+</td>
+                            <td>Последние обновления .NET<br>PowerShell 7+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Требования к инфраструктуре -->
+            <div style="margin-bottom: 60px;">
+                <h3 style="color: var(--oil-dark); margin-bottom: 30px; text-align: center;">
+                    <i class="fas fa-network-wired" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                    Требования к инфраструктуре
+                </h3>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Active Directory</h3>
+                        <p>
+                            • Windows Server 2012 R2 или новее<br>
+                            • Функциональный уровень домена 2012 R2+<br>
+                            • Доступ к контроллеру домена<br>
+                            • Права на чтение оргструктуры<br>
+                            • Права на управление группами
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-linux"></i>
+                        </div>
+                        <h3>Samba DC</h3>
+                        <p>
+                            • Samba 4.7 или новее<br>
+                            • RedOS 7.3+ или Альт Linux 10+<br>
+                            • Доступ по протоколу LDAP<br>
+                            • Учётная запись с правами администратора<br>
+                            • Настроенные политики безопасности
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>1С:Предприятие</h3>
+                        <p>
+                            • Версия платформы 8.3.10 или новее<br>
+                            • Доступ к базе данных 1С<br>
+                            • Учётная запись с правами чтения<br>
+                            • Разрешение на доступ к оргструктуре<br>
+                            • Стабильное сетевое соединение
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Требования к доступу -->
+            <div style="margin-bottom: 60px;">
+                <h3 style="color: var(--oil-dark); margin-bottom: 30px; text-align: center;">
+                    <i class="fas fa-key" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                    Требования к правам доступа
+                </h3>
+                
+                <div style="background: var(--oil-light); padding: 40px; border-radius: 10px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                        <div>
+                            <h4 style="color: var(--oil-dark); margin-bottom: 15px;">
+                                <i class="fas fa-user-tie" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                                Учётная запись
+                            </h4>
+                            <ul style="color: var(--oil-steel); line-height: 1.7; padding-left: 20px;">
+                                <li>Доменная учётная запись</li>
+                                <li>Права локального администратора на сервере</li>
+                                <li>Членство в группе Domain Admins (рекомендуется)</li>
+                                <li>Или делегированные права на OU</li>
+                                <li>Права на создание/удаление групп безопасности</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--oil-dark); margin-bottom: 15px;">
+                                <i class="fas fa-shield-alt" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                                Безопасность
+                            </h4>
+                            <ul style="color: var(--oil-steel); line-height: 1.7; padding-left: 20px;">
+                                <li>Доступ по защищённому каналу (LDAPS)</li>
+                                <li>Шифрование передаваемых данных</li>
+                                <li>Ограничение доступа к серверу модуля</li>
+                                <li>Регулярное обновление сертификатов</li>
+                                <li>Аудит действий учётной записи</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--oil-dark); margin-bottom: 15px;">
+                                <i class="fas fa-database" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                                Доступ к данным
+                            </h4>
+                            <ul style="color: var(--oil-steel); line-height: 1.7; padding-left: 20px;">
+                                <li>Чтение данных оргструктуры из 1С</li>
+                                <li>Доступ только к необходимым таблицам</li>
+                                <li>Ограничение времени доступа</li>
+                                <li>Журналирование всех запросов</li>
+                                <li>Резервное копирование конфигураций</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Производительность -->
+            <div style="background: var(--gradient-steel); color: white; padding: 40px; border-radius: 10px; margin-bottom: 40px;">
+                <h3 style="text-align: center; margin-bottom: 30px; color: var(--oil-white);">
+                    <i class="fas fa-tachometer-alt" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                    Производительность
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+                    <div>
+                        <h4 style="color: var(--oil-gold); margin-bottom: 15px;">500-1000 пользователей</h4>
+                        <p>Сервер: 4 ядра, 8 GB RAM<br>Время синхронизации: 2-5 минут</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--oil-gold); margin-bottom: 15px;">1000-5000 пользователей</h4>
+                        <p>Сервер: 8 ядер, 16 GB RAM<br>Время синхронизации: 5-10 минут</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--oil-gold); margin-bottom: 15px;">5000-10000 пользователей</h4>
+                        <p>Сервер: 12+ ядер, 32 GB RAM<br>Время синхронизации: 10-15 минут</p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 25px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                    * Время синхронизации указано для типовой оргструктуры с 3-4 уровнями вложенности
+                </p>
+            </div>
+
+            <!-- Рекомендации -->
+            <div style="margin-bottom: 60px;">
+                <h3 style="color: var(--oil-dark); margin-bottom: 30px; text-align: center;">
+                    <i class="fas fa-lightbulb" style="color: var(--oil-gold); margin-right: 10px;"></i>
+                    Рекомендации по внедрению
+                </h3>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3>Подготовка</h3>
+                        <p>
+                            • Проверить совместимость систем<br>
+                            • Создать тестовое окружение<br>
+                            • Подготовить учётные записи<br>
+                            • Настроить политики безопасности<br>
+                            • Сделать резервные копии
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Настройка</h3>
+                        <p>
+                            • Установить модуль на отдельный сервер<br>
+                            • Настроить подключения ко всем системам<br>
+                            • Протестировать в нерабочее время<br>
+                            • Настроить исключения<br>
+                            • Запустить пробную синхронизацию
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Эксплуатация</h3>
+                        <p>
+                            • Мониторинг работы модуля<br>
+                            • Регулярная проверка журналов<br>
+                            • Обновление версий<br>
+                            • Резервное копирование<br>
+                            • Периодический аудит
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка по центру -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="contacts.html#consult" class="btn btn-primary" style="font-size: 1.2rem; padding: 15px 40px;">
+                    <i class="fas fa-headset"></i> Бесплатная консультация по требованиям
+                </a>
+                <p style="margin-top: 20px; color: var(--oil-steel); max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Наши специалисты помогут оценить вашу инфраструктуру и подготовить план внедрения
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Синхро-Безопасность</h3>
+                    <p>Профессиональное решение для автоматизации управления группами безопасности.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i> +7 (919) 157-79-00</li>
+                        <li><i class="fas fa-envelope"></i> vladimir_minkov@mail.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span class="current-year">2025</span> Синхро-Безопасность. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

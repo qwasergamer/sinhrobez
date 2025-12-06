@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="icon" href="images/logo.ico"><!-- 32×32 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О продукте - Синхро-Безопасность</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Чердак -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-contacts">
+                <div class="top-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+7 (919) 157-79-00</span>
+                </div>
+                <div class="top-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>vladimir_minkov@mail.ru</span>
+                </div>
+            </div>
+            <a href="contacts.html#demo" class="top-cta">Заказать демо</a>
+        </div>
+    </div>
+
+    <!-- Шапка (с русскими названиями как на главной) -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">СБ</div>
+                    <div class="logo-text">
+                        <h1>Синхро-Безопасность</h1>
+                        <p class="tagline">Промышленная автоматизация контроля доступа</p>
+                    </div>
+                </a>
+                <nav class="main-nav" id="mainNav">
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i>Главная</a></li>
+                        <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i>О продукте</a></li>
+                        <li><a href="features.html"><i class="fas fa-star"></i>Возможности</a></li>
+                        <li><a href="technology.html"><i class="fas fa-cogs"></i>Технологии</a></li>
+                        <li><a href="contacts.html"><i class="fas fa-phone"></i>Контакты</a></li>
+                    </ul>
+                </nav>
+                <!-- Кнопка бокового меню (добавлено) -->
+                <button class="side-menu-btn" id="sideMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Боковое меню (добавлено) -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h3>Все разделы</h3>
+            <button class="close-side-menu" id="closeSideMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="side-menu-nav">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i>Главная</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i>О продукте</a></li>
+                <li><a href="features.html"><i class="fas fa-star"></i>Возможности</a></li>
+                <li><a href="technology.html"><i class="fas fa-cogs"></i>Технологии</a></li>
+                <li><a href="requirements.html"><i class="fas fa-server"></i>Требования</a></li>
+                <li><a href="installation.html"><i class="fas fa-download"></i>Установка</a></li>
+                <li><a href="docs.html"><i class="fas fa-book"></i>Документация</a></li>
+                <li><a href="contacts.html"><i class="fas fa-phone"></i>Контакты</a></li>
+                <li><a href="download.html"><i class="fas fa-file-download"></i>Скачать</a></li>
+                <li><a href="support.html"><i class="fas fa-headset"></i>Поддержка</a></li>
+                <li><a href="integration.html"><i class="fas fa-link"></i>Интеграция</a></li>
+                <li><a href="privacy.html"><i class="fas fa-shield-alt"></i>Политика</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <div class="container">
+            <h1>О продукте</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Главная</a> / <span>О продукте</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержимое страницы -->
+    <section class="content-section">
+        <div class="container">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <h2 style="color: var(--oil-dark); margin-bottom: 30px; font-size: 2rem;">
+                    <i class="fas fa-shield-alt" style="color: var(--oil-gold); margin-right: 15px;"></i>
+                    Синхро-Безопасность - промышленная автоматизация безопасности
+                </h2>
+                
+                <div style="background: var(--oil-light); padding: 30px; border-radius: 10px; margin-bottom: 40px; border-left: 5px solid var(--oil-gold);">
+                    <h3 style="color: var(--oil-dark); margin-bottom: 15px;">Суть решения</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        Синхро-Безопасность - это специализированный программный модуль для автоматической синхронизации 
+                        организационной структуры предприятия из системы 1С с группами безопасности в Active Directory 
+                        (Windows) и Samba DC (RedOS). Решение разработано специально для нужд крупных промышленных предприятий.
+                    </p>
+                </div>
+
+                <div class="features-grid" style="margin-top: 50px;">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <h3>Как это работает</h3>
+                        <p>
+                            1. Модуль получает актуальную оргструктуру из базы данных 1С<br>
+                            2. Сравнивает её с существующими группами безопасности<br>
+                            3. Автоматически создаёт недостающие группы<br>
+                            4. Назначает пользователей в соответствии с должностями<br>
+                            5. Управляет правами доступа<br>
+                            6. Ведёт детальный журнал изменений
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Для промышленных предприятий</h3>
+                        <p>
+                            • Нефтегазовые компании<br>
+                            • Промышленные комбинаты<br>
+                            • Крупные производства<br>
+                            • Энергетические компании<br>
+                            • Промышленные холдинги<br>
+                            • Предприятия с требованиями информационной безопасности
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Преимущества</h3>
+                        <p>
+                            • Снижение рисков безопасности на 90%<br>
+                            • Экономия времени администраторов на 70%<br>
+                            • Исключение человеческих ошибок<br>
+                            • Соответствие требованиям стандартов<br>
+                            • Быстрая адаптация к изменениям структуры
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px; text-align: center;">
+                    <h3 style="color: var(--oil-dark); margin-bottom: 30px; font-size: 1.8rem;">
+                        Технический процесс работы
+                    </h3>
+                    <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left;">
+                            <div>
+                                <h4 style="color: var(--oil-gold); margin-bottom: 10px;">1. Сбор данных</h4>
+                                <p>Ежедневное получение оргструктуры из 1С</p>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--oil-gold); margin-bottom: 10px;">2. Анализ</h4>
+                                <p>Сравнение с текущими группами AD/Samba</p>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--oil-gold); margin-bottom: 10px;">3. Синхронизация</h4>
+                                <p>Создание/обновление групп безопасности</p>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--oil-gold); margin-bottom: 10px;">4. Назначение прав</h4>
+                                <p>Автоматическое распределение доступов</p>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--oil-gold); margin-bottom: 10px;">5. Отчётность</h4>
+                                <p>Формирование детальных отчётов</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px; background: var(--gradient-oil); color: white; padding: 40px; border-radius: 10px; text-align: center;">
+                    <h3 style="margin-bottom: 20px; font-size: 1.8rem;">Готовы к внедрению?</h3>
+                    <p style="margin-bottom: 30px; font-size: 1.1rem;">
+                        Начните с бесплатной консультации и демонстрации возможностей системы
+                    </p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <a href="contacts.html#consult" class="btn btn-primary">
+                            <i class="fas fa-calendar-alt"></i> Заказать консультацию
+                        </a>
+                        <a href="download.html" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Скачать демо-версию
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Синхро-Безопасность</h3>
+                    <p>Профессиональное решение для автоматизации управления группами безопасности.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i> +7 (919) 157-79-00</li>
+                        <li><i class="fas fa-envelope"></i> vladimir_minkov@mail.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span class="current-year">2025</span> Синхро-Безопасность. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно успешной отправки -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSuccessModal">&times;</span>
+            <div style="text-align: center;">
+                <div style="width: 80px; height: 80px; background: var(--oil-green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px;">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 style="color: var(--oil-dark); margin-bottom: 20px;">Заявка отправлена!</h2>
+                <p style="margin-bottom: 30px; color: var(--oil-steel);">
+                    Спасибо за вашу заявку! Наш специалист свяжется с вами 
+                    в течение 1 рабочего дня для уточнения деталей.
+                </p>
+                <button class="btn btn-primary" id="closeSuccessBtn">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
