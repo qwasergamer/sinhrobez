@@ -7,6 +7,223 @@
     <title>Активные заявки - Синхро-Безопасность</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Стили для страницы заявок */
+        .requests-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .requests-header {
+            background: var(--gradient-oil);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--oil-gold);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .filters {
+            background: var(--oil-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .requests-table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .requests-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .requests-table th {
+            background: var(--oil-dark);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .requests-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .requests-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .request-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .request-type.demo {
+            background: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+        }
+        
+        .request-type.support {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+        }
+        
+        .request-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-new {
+            background: rgba(243, 156, 18, 0.1);
+            color: #f39c12;
+        }
+        
+        .status-in-progress {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .status-completed {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+        }
+        
+        .status-cancelled {
+            background: rgba(149, 165, 166, 0.1);
+            color: #7f8c8d;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn.view {
+            background: var(--oil-light);
+            color: var(--oil-dark);
+        }
+        
+        .action-btn.edit {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+        
+        .action-btn.delete {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+        
+        .no-requests {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--oil-steel);
+        }
+        
+        .no-requests i {
+            font-size: 4rem;
+            color: var(--oil-light);
+            margin-bottom: 20px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--oil-light);
+            margin-bottom: 15px;
+        }
+        
+        .refresh-btn {
+            background: var(--gradient-gold);
+            color: var(--oil-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+        
+        .date-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: var(--oil-light);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--oil-steel);
+        }
+        
+        @media (max-width: 768px) {
+            .requests-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Чердак -->
@@ -43,7 +260,7 @@
                         <li><a href="about.html"><i class="fas fa-info-circle"></i>О продукте</a></li>
                         <li><a href="features.html"><i class="fas fa-star"></i>Возможности</a></li>
                         <li><a href="technology.html"><i class="fas fa-cogs"></i>Технологии</a></li>
-                        <li><a href="requests.html" class="active"><i class="fas fa-database"></i>Заявки</a></li>
+                        <li><a href="requests.html" class="active"><i class="fas fa-tasks"></i>Заявки</a></li>
                     </ul>
                 </nav>
                 <button class="side-menu-btn" id="sideMenuBtn">
@@ -75,7 +292,7 @@
                 <li><a href="support.html"><i class="fas fa-headset"></i>Поддержка</a></li>
                 <li><a href="integration.html"><i class="fas fa-link"></i>Интеграция</a></li>
                 <li><a href="privacy.html"><i class="fas fa-shield-alt"></i>Политика</a></li>
-                <li><a href="requests.html"><i class="fas fa-database"></i>Заявки</a></li>
+                <li><a href="requests.html"><i class="fas fa-tasks"></i>Активные заявки</a></li>
             </ul>
         </nav>
     </div>
@@ -93,136 +310,88 @@
     <!-- Содержимое страницы -->
     <section class="content-section">
         <div class="container">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h2 style="color: var(--oil-dark); margin-bottom: 20px; font-size: 2rem;">
-                    <i class="fas fa-database" style="color: var(--oil-gold); margin-right: 10px;"></i>
-                    База данных заявок
-                </h2>
-                <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: var(--oil-steel);">
-                    Все заявки на демонстрацию и обращения в поддержку сохраняются локально в браузере
-                </p>
-            </div>
-
-            <!-- Статистика -->
-            <div style="background: var(--oil-light); padding: 30px; border-radius: 10px; margin-bottom: 40px;">
-                <h3 style="color: var(--oil-dark); margin-bottom: 25px; text-align: center;">
-                    <i class="fas fa-chart-bar" style="color: var(--oil-gold); margin-right: 10px;"></i>
-                    Статистика
-                </h3>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
-                    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                        <div style="font-size: 2.5rem; color: var(--oil-gold); margin-bottom: 10px;">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: var(--oil-dark);" id="totalRequests">0</div>
-                        <div style="color: var(--oil-steel);">Всего заявок</div>
-                    </div>
+            <div class="requests-container">
+                <!-- Статистика -->
+             <div class="requests-header" style="text-align: center;">
+                    <h2 style="margin-bottom: 10px; color: white;">Панель просмотра всех заявок</h2>
                     
-                    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                        <div style="font-size: 2.5rem; color: var(--oil-blue); margin-bottom: 10px;">
-                            <i class="fas fa-desktop"></i>
+                    <div class="stats-grid" id="statsContainer">
+                        <div class="stat-card">
+                            <span class="stat-number" id="totalRequests">0</span>
+                            <span>Всего заявок</span>
                         </div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: var(--oil-dark);" id="demoRequests">0</div>
-                        <div style="color: var(--oil-steel);">Заявок на демо</div>
-                    </div>
-                    
-                    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                        <div style="font-size: 2.5rem; color: var(--oil-green); margin-bottom: 10px;">
-                            <i class="fas fa-headset"></i>
+                        <div class="stat-card">
+                            <span class="stat-number" id="demoRequests">0</span>
+                            <span>Демо-заявки</span>
                         </div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: var(--oil-dark);" id="supportRequests">0</div>
-                        <div style="color: var(--oil-steel);">Обращений в поддержку</div>
-                    </div>
-                    
-                    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                        <div style="font-size: 2.5rem; color: var(--oil-fire); margin-bottom: 10px;">
-                            <i class="fas fa-calendar-day"></i>
+                        <div class="stat-card">
+                            <span class="stat-number" id="supportRequests">0</span>
+                            <span>Техподдержка</span>
                         </div>
-                        <div style="font-size: 1.8rem; font-weight: bold; color: var(--oil-dark);" id="todayRequests">0</div>
-                        <div style="color: var(--oil-steel);">Сегодня</div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="newRequests">0</span>
+                            <span>Новые</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="todayRequests">0</span>
+                            <span>Сегодня</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Управление данными -->
-            <div style="margin-bottom: 40px; text-align: center;">
-                <button id="exportBtn" class="btn btn-primary" style="margin: 5px;">
-                    <i class="fas fa-download"></i> Экспорт в Excel
-                </button>
-                <button id="importBtn" class="btn btn-primary" style="margin: 5px;">
-                    <i class="fas fa-upload"></i> Импорт данных
-                </button>
-                <button id="clearBtn" class="btn btn-secondary" style="margin: 5px;">
-                    <i class="fas fa-trash"></i> Очистить все данные
-                </button>
-                <button id="refreshBtn" class="btn btn-primary" style="margin: 5px;">
-                    <i class="fas fa-sync"></i> Обновить
-                </button>
-            </div>
-
-            <!-- Таблица заявок -->
-            <div style="margin-bottom: 40px;">
-                <h3 style="color: var(--oil-dark); margin-bottom: 25px; text-align: center;">
-                    <i class="fas fa-list" style="color: var(--oil-gold); margin-right: 10px;"></i>
-                    Все заявки
-                </h3>
-                
-                <div style="overflow-x: auto;">
-                    <table class="requests-table" style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: var(--oil-dark); color: white;">
-                                <th style="padding: 15px; text-align: left;">ID</th>
-                                <th style="padding: 15px; text-align: left;">Тип</th>
-                                <th style="padding: 15px; text-align: left;">Дата</th>
-                                <th style="padding: 15px; text-align: left;">Имя</th>
-                                <th style="padding: 15px; text-align: left;">Компания</th>
-                                <th style="padding: 15px; text-align: left;">Телефон</th>
-                                <th style="padding: 15px; text-align: left;">Email</th>
-                                <th style="padding: 15px; text-align: left;">Действия</th>
-                            </tr>
-                        </thead>
-                        <tbody id="requestsTableBody">
-                            <!-- Сюда JavaScript добавит строки -->
-                            <tr id="noRequestsRow">
-                                <td colspan="8" style="padding: 30px; text-align: center; color: var(--oil-steel);">
-                                    <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px; display: block; color: var(--oil-light);"></i>
-                                    Нет сохранённых заявок<br>
-                                    <span style="font-size: 0.9rem;">Заявки появятся здесь после заполнения форм</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Детальный просмотр -->
-            <div id="requestDetails" style="display: none; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 40px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                    <h3 style="color: var(--oil-dark); margin: 0;">
-                        <i class="fas fa-file-alt" style="color: var(--oil-gold); margin-right: 10px;"></i>
-                        Детали заявки #<span id="detailId">0</span>
-                    </h3>
-                    <button id="closeDetailsBtn" style="background: none; border: none; font-size: 1.5rem; color: var(--oil-steel); cursor: pointer;">
-                        <i class="fas fa-times"></i>
+                <!-- Фильтры -->
+                <div class="filters">
+                    <div>
+                        <strong style="color: var(--oil-dark); margin-right: 10px;">Фильтры:</strong>
+                    </div>
+                    <select id="filterType" class="form-control" style="width: 200px;">
+                        <option value="all">Все типы заявок</option>
+                        <option value="demo">Только демо-заявки</option>
+                        <option value="support">Только техподдержка</option>
+                    </select>
+                    
+                    <select id="filterStatus" class="form-control" style="width: 200px;">
+                        <option value="all">Все статусы</option>
+                        <option value="new">Новые</option>
+                        <option value="in-progress">В работе</option>
+                        <option value="completed">Завершённые</option>
+                    </select>
+                    
+                    <input type="text" id="filterSearch" class="form-control" placeholder="Поиск по компании или имени..." style="flex: 1; min-width: 200px;">
+                    
+                    <button id="applyFilters" class="btn btn-primary" style="padding: 10px 20px;">
+                        <i class="fas fa-filter"></i> Применить
+                    </button>
+                    
+                    <button id="clearFilters" class="btn btn-secondary" style="padding: 10px 20px;">
+                        <i class="fas fa-times"></i> Сбросить
                     </button>
                 </div>
-                
-                <div id="detailContent">
-                    <!-- Сюда загрузится детальная информация -->
-                </div>
-            </div>
 
-            <!-- Информация о сохранении -->
-            <div style="background: var(--gradient-steel); color: white; padding: 25px; border-radius: 10px; text-align: center;">
-                <h4 style="margin-bottom: 15px; color: var(--oil-white);">
-                    <i class="fas fa-info-circle" style="color: var(--oil-gold); margin-right: 10px;"></i>
-                    Как это работает?
-                </h4>
-                <p style="margin-bottom: 0; opacity: 0.9;">
-                    Все заявки сохраняются в локальном хранилище браузера (LocalStorage).<br>
-                    Данные доступны только с этого компьютера и в этом браузере.
-                </p>
+                <!-- Таблица заявок -->
+                <div class="requests-table-container">
+                    <div style="padding: 20px; border-bottom: 1px solid #eee; text-align: center; position: relative;">
+                        <h3 style="color: var(--oil-dark); margin: 0; display: inline-block;">Список заявок</h3>
+                        <button id="refreshRequests" class="refresh-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+                            <i class="fas fa-sync-alt"></i> Обновить
+                        </button>
+                    </div>
+                    
+                    <div id="requestsTableContainer">
+                        <!-- Таблица будет загружена через JavaScript -->
+                        <div class="no-requests" id="loadingState">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Загрузка заявок...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка экспорта -->
+                <div style="text-align: center; margin-top: 30px;">
+    <button id="exportRequests" class="btn btn-primary" style="padding: 12px 30px;">
+        <i class="fas fa-file-excel"></i> Экспорт в Excel
+    </button>
+</div>
             </div>
         </div>
     </section>
@@ -236,7 +405,7 @@
                     <p>Профессиональное решение для автоматизации управления группами безопасности.</p>
                 </div>
                 <div class="footer-col">
-                    <h3>Контакты</h3>
+                    <h3>Поддержка</h3>
                     <ul class="footer-contact">
                         <li><i class="fas fa-phone"></i> +7 (919) 157-79-00</li>
                         <li><i class="fas fa-envelope"></i> vladimir_minkov@mail.ru</li>
@@ -244,55 +413,62 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Навигация</h3>
+                    <h3>Быстрые ссылки</h3>
                     <ul class="footer-links">
-                        <li><a href="contacts.html"><i class="fas fa-file-alt"></i> Оставить заявку</a></li>
-                        <li><a href="support.html"><i class="fas fa-headset"></i> Поддержка</a></li>
+                        <li><a href="contacts.html"><i class="fas fa-phone"></i> Контакты</a></li>
+                        <li><a href="support.html"><i class="fas fa-headset"></i> Техподдержка</a></li>
+                        <li><a href="requests.html"><i class="fas fa-tasks"></i> Активные заявки</a></li>
                         <li><a href="download.html"><i class="fas fa-download"></i> Скачать демо</a></li>
-                        <li><a href="requests.html"><i class="fas fa-database"></i> База заявок</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span class="current-year">2025</span> Синхро-Безопасность. Все права защищены.</p>
-                <p>Заявки сохраняются локально в браузере</p>
+                <p>Техническая поддержка для промышленных предприятий РФ и СНГ</p>
             </div>
         </div>
     </footer>
 
-    <!-- Модальное окно подтверждения -->
-    <div class="modal" id="confirmModal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div style="text-align: center;">
-                <div style="width: 60px; height: 60px; background: var(--oil-fire); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px;">
-                    <i class="fas fa-exclamation-triangle"></i>
+    <!-- Модальное окно просмотра заявки -->
+    <div class="modal" id="viewRequestModal">
+        <div class="modal-content" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <span class="close-modal" id="closeViewModal">&times;</span>
+            <h2 style="color: var(--oil-dark); margin-bottom: 20px;">Детали заявки</h2>
+            
+            <div id="requestDetails">
+                <!-- Детали будут загружены через JavaScript -->
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Загрузка деталей...</p>
                 </div>
-                <h3 style="color: var(--oil-dark); margin-bottom: 15px;" id="confirmTitle">Подтверждение</h3>
-                <p style="color: var(--oil-steel); margin-bottom: 25px;" id="confirmMessage"></p>
-                <div style="display: flex; gap: 15px; justify-content: center;">
-                    <button id="confirmCancelBtn" class="btn btn-secondary" style="padding: 10px 25px;">Отмена</button>
-                    <button id="confirmOkBtn" class="btn btn-primary" style="padding: 10px 25px;">Подтвердить</button>
-                </div>
+            </div>
+            
+            <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
+                <button id="closeDetailsBtn" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно импорта -->
-    <div class="modal" id="importModal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div style="text-align: center;">
-                <div style="width: 60px; height: 60px; background: var(--oil-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px;">
-                    <i class="fas fa-file-import"></i>
-                </div>
-                <h3 style="color: var(--oil-dark); margin-bottom: 15px;">Импорт данных</h3>
-                <p style="color: var(--oil-steel); margin-bottom: 20px;">
-                    Выберите файл .json для импорта заявок
-                </p>
-                <input type="file" id="importFileInput" accept=".json" style="margin-bottom: 20px; padding: 10px; border: 2px dashed #ddd; border-radius: 8px; width: 100%;">
-                <div style="display: flex; gap: 15px; justify-content: center;">
-                    <button id="importCancelBtn" class="btn btn-secondary" style="padding: 10px 25px;">Отмена</button>
-                    <button id="importFileBtn" class="btn btn-primary" style="padding: 10px 25px;">Импортировать</button>
-                </div>
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content" style="max-width: 500px; text-align: center;">
+            <span class="close-modal" id="closeDeleteModal">&times;</span>
+            <div style="width: 80px; height: 80px; background: var(--oil-fire); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 style="color: var(--oil-dark); margin-bottom: 15px;">Подтверждение удаления</h2>
+            <p style="color: var(--oil-steel); margin-bottom: 25px;" id="deleteMessage">
+                Вы уверены, что хотите удалить эту заявку?
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="confirmDeleteBtn" class="btn btn-primary" style="background: var(--oil-fire);">
+                    <i class="fas fa-trash"></i> Да, удалить
+                </button>
+                <button id="cancelDeleteBtn" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Отмена
+                </button>
             </div>
         </div>
     </div>
@@ -303,783 +479,609 @@
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Страница заявок загружена');
         
-        // Элементы
-        const tableBody = document.getElementById('requestsTableBody');
-        const noRequestsRow = document.getElementById('noRequestsRow');
-        const requestDetails = document.getElementById('requestDetails');
-        const detailContent = document.getElementById('detailContent');
-        const detailId = document.getElementById('detailId');
-        const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+        let allRequests = [];
+        let currentRequestToDelete = null;
         
-        // Кнопки
-        const exportBtn = document.getElementById('exportBtn');
-        const importBtn = document.getElementById('importBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const refreshBtn = document.getElementById('refreshBtn');
+        // Элементы DOM
+        const statsContainer = document.getElementById('statsContainer');
+        const requestsTableContainer = document.getElementById('requestsTableContainer');
+        const loadingState = document.getElementById('loadingState');
+        const refreshBtn = document.getElementById('refreshRequests');
+        const exportBtn = document.getElementById('exportRequests');
+        const clearAllBtn = document.getElementById('clearAllRequests');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const clearFiltersBtn = document.getElementById('clearFilters');
         
-        // Модальные окна
-        const confirmModal = document.getElementById('confirmModal');
-        const importModal = document.getElementById('importModal');
-        const importFileInput = document.getElementById('importFileInput');
-        const importFileBtn = document.getElementById('importFileBtn');
-        const importCancelBtn = document.getElementById('importCancelBtn');
+        // Функция форматирования даты
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
         
-        // Функция загрузки всех заявок
-        function loadAllRequests() {
-            console.log('Загрузка всех заявок...');
+        // Функция форматирования времени назад
+        function timeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
             
-            // Загружаем оба типа заявок
-            const demoRequests = JSON.parse(localStorage.getItem('sync_demo_requests') || '[]');
-            const supportRequests = JSON.parse(localStorage.getItem('sync_support_requests') || '[]');
-            
-            console.log('Демо заявок:', demoRequests.length);
-            console.log('Заявок поддержки:', supportRequests.length);
-            
-            // Объединяем и сортируем по дате (новые сверху)
-            const allRequests = [...demoRequests, ...supportRequests]
-                .sort((a, b) => new Date(b.timestamp || b.created_at) - new Date(a.timestamp || a.created_at));
-            
-            // Обновляем статистику
-            updateStatistics(demoRequests.length, supportRequests.length);
-            
-            // Очищаем таблицу
-            tableBody.innerHTML = '';
-            
-            if (allRequests.length === 0) {
-                tableBody.appendChild(noRequestsRow.cloneNode(true));
+            if (diffMins < 60) {
+                return `${diffMins} мин. назад`;
+            } else if (diffHours < 24) {
+                return `${diffHours} ч. назад`;
+            } else if (diffDays === 1) {
+                return 'Вчера';
+            } else {
+                return `${diffDays} дн. назад`;
+            }
+        }
+        
+        // Загрузка заявок
+        async function loadRequests() {
+            try {
+                loadingState.innerHTML = '<i class="fas fa-spinner fa-spin"></i><p>Загрузка заявок...</p>';
+                
+                // Используем функцию из script.js
+                if (typeof getAllRequests === 'function') {
+                    allRequests = await getAllRequests();
+                    updateStatistics();
+                    renderRequestsTable(allRequests);
+                } else {
+                    throw new Error('Функция getAllRequests не найдена');
+                }
+                
+            } catch (error) {
+                console.error('Ошибка загрузки заявок:', error);
+                loadingState.innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="color: var(--oil-fire);"></i>
+                    <p>Ошибка загрузки заявок: ${error.message}</p>
+                    <button onclick="location.reload()" class="refresh-btn" style="margin-top: 15px;">
+                        <i class="fas fa-redo"></i> Попробовать снова
+                    </button>
+                `;
+            }
+        }
+        
+        // Обновление статистики
+        async function updateStatistics() {
+            try {
+                const stats = await getRequestsStatistics();
+                
+                document.getElementById('totalRequests').textContent = stats.total || 0;
+                document.getElementById('demoRequests').textContent = stats.demo || 0;
+                document.getElementById('supportRequests').textContent = stats.support || 0;
+                document.getElementById('newRequests').textContent = (stats.demo_new || 0) + (stats.support_new || 0);
+                document.getElementById('todayRequests').textContent = stats.today || 0;
+                
+            } catch (error) {
+                console.error('Ошибка обновления статистики:', error);
+            }
+        }
+        
+        // Рендеринг таблицы заявок
+        function renderRequestsTable(requests) {
+            if (!requests || requests.length === 0) {
+                requestsTableContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3 style="color: var(--oil-dark); margin-bottom: 10px;">Нет заявок</h3>
+                        <p style="color: var(--oil-steel); margin-bottom: 20px;">Заявок ещё не было создано</p>
+                        <a href="contacts.html" class="btn btn-primary">
+                            <i class="fas fa-calendar-plus"></i> Создать первую заявку
+                        </a>
+                    </div>
+                `;
                 return;
             }
             
-            // Скрываем строку "нет заявок"
-            noRequestsRow.style.display = 'none';
+            let tableHTML = `
+                <table class="requests-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">ID</th>
+                            <th style="width: 120px;">Тип</th>
+                            <th>Компания</th>
+                            <th>Имя</th>
+                            <th>Система</th>
+                            <th style="width: 150px;">Дата создания</th>
+                            <th style="width: 100px;">Статус</th>
+                            <th style="width: 150px;">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
             
-            // Добавляем каждую заявку в таблицу
-            allRequests.forEach((request, index) => {
-                const row = document.createElement('tr');
-                row.style.borderBottom = '1px solid #eee';
-                row.style.transition = 'background 0.3s';
+            requests.forEach(request => {
+                const isDemo = request.request_type === 'Демонстрация';
+                const statusClass = request.status ? `status-${request.status}` : 'status-new';
+                const statusText = getStatusText(request.status);
+                const system = request.system || request.system_type || 'Не указана';
                 
-                // При наведении
-                row.addEventListener('mouseenter', () => {
-                    row.style.background = 'var(--oil-light)';
-                });
-                row.addEventListener('mouseleave', () => {
-                    row.style.background = '';
-                });
+                tableHTML += `
+                    <tr data-id="${request.id}" data-type="${isDemo ? 'demo' : 'support'}">
+                        <td>
+                            <span class="date-badge">${request.id}</span>
+                        </td>
+                        <td>
+                            <span class="request-type ${isDemo ? 'demo' : 'support'}">
+                                ${isDemo ? 'Демо' : 'Поддержка'}
+                            </span>
+                        </td>
+                        <td>
+                            <strong>${request.company || 'Не указано'}</strong><br>
+                            <small style="color: var(--oil-steel); font-size: 0.85rem;">
+                                ${timeAgo(request.created_at)}
+                            </small>
+                        </td>
+                        <td>${request.name || 'Не указано'}</td>
+                        <td>${system}</td>
+                        <td>
+                            ${formatDate(request.created_at)}<br>
+                            <small style="color: var(--oil-steel); font-size: 0.85rem;">
+                                ${request.email || ''}
+                            </small>
+                        </td>
+                        <td>
+                            <span class="request-status ${statusClass}">${statusText}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn view" onclick="viewRequest(${request.id}, '${isDemo ? 'demo' : 'support'}')">
+                                    <i class=></i> Просмотр
+                                </button>
+                                <button class="action-btn delete" onclick="confirmDelete(${request.id}, '${isDemo ? 'demo' : 'support'}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            requestsTableContainer.innerHTML = tableHTML;
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'Новая',
+                'in-progress': 'В работе',
+                'completed': 'Завершена',
+                'cancelled': 'Отменена'
+            };
+            return statusMap[status] || 'Новая';
+        }
+        
+        // Просмотр заявки
+        window.viewRequest = async function(requestId, type) {
+            try {
+                const modal = document.getElementById('viewRequestModal');
+                const detailsContainer = document.getElementById('requestDetails');
                 
-                // Определяем тип заявки
-                const isDemo = request.hasOwnProperty('users_count');
-                const type = isDemo ? 'Демо' : 'Поддержка';
-                const typeColor = isDemo ? 'var(--oil-blue)' : 'var(--oil-green)';
-                const typeIcon = isDemo ? 'fa-desktop' : 'fa-headset';
+                // Находим заявку
+                const request = allRequests.find(r => r.id === requestId && 
+                    ((type === 'demo' && r.request_type === 'Демонстрация') || 
+                     (type === 'support' && r.request_type === 'Техподдержка')));
                 
-                // Форматируем дату
-                const date = new Date(request.timestamp || request.created_at);
-                const formattedDate = date.toLocaleDateString('ru-RU', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Создаем ячейки
-                row.innerHTML = `
-                    <td style="padding: 15px; color: var(--oil-steel); font-weight: bold;">
-                        ${index + 1}
-                    </td>
-                    <td style="padding: 15px;">
-                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: ${typeColor}; color: white; border-radius: 20px; font-size: 0.8rem;">
-                            <i class="fas ${typeIcon}"></i> ${type}
-                        </span>
-                    </td>
-                    <td style="padding: 15px; color: var(--oil-steel);">
-                        ${formattedDate}
-                    </td>
-                    <td style="padding: 15px; font-weight: 500; color: var(--oil-dark);">
-                        ${escapeHtml(request.full_name || request.name)}
-                    </td>
-                    <td style="padding: 15px; color: var(--oil-steel);">
-                        ${escapeHtml(request.company)}
-                    </td>
-                    <td style="padding: 15px;">
-                        <a href="tel:${request.phone}" style="color: var(--oil-blue); text-decoration: none;">
-                            <i class="fas fa-phone" style="margin-right: 5px;"></i>${request.phone}
-                        </a>
-                    </td>
-                    <td style="padding: 15px;">
-                        <a href="mailto:${request.email}" style="color: var(--oil-blue); text-decoration: none;">
-                            <i class="fas fa-envelope" style="margin-right: 5px;"></i>${request.email}
-                        </a>
-                    </td>
-                    <td style="padding: 15px;">
-                        <div style="display: flex; gap: 8px;">
-                            <button class="view-btn" data-index="${index}" data-type="${isDemo ? 'demo' : 'support'}" style="padding: 6px 12px; background: var(--oil-gold); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="delete-btn" data-index="${index}" data-type="${isDemo ? 'demo' : 'support'}" style="padding: 6px 12px; background: var(--oil-fire); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                if (!request) {
+                    detailsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-triangle" style="color: var(--oil-fire);"></i>
+                            <p>Заявка не найдена</p>
                         </div>
-                    </td>
+                    `;
+                    modal.style.display = 'flex';
+                    return;
+                }
+                
+                const isDemo = request.request_type === 'Демонстрация';
+                const statusClass = request.status ? `status-${request.status}` : 'status-new';
+                const statusText = getStatusText(request.status);
+                
+                let detailsHTML = `
+                    <div style="background: var(--oil-light); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="color: var(--oil-dark); margin: 0 0 5px 0;">
+                                    Заявка #${request.id}
+                                    <span class="request-type ${isDemo ? 'demo' : 'support'}" style="margin-left: 10px;">
+                                        ${request.request_type}
+                                    </span>
+                                </h3>
+                                <p style="color: var(--oil-steel); margin: 0;">
+                                    Создана: ${formatDate(request.created_at)}
+                                </p>
+                            </div>
+                            <span class="request-status ${statusClass}" style="font-size: 1rem;">${statusText}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--oil-gold); margin-bottom: 10px;">Контактная информация</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                            <div>
+                                <strong>Компания:</strong><br>
+                                ${request.company || 'Не указано'}
+                            </div>
+                            <div>
+                                <strong>Контактное лицо:</strong><br>
+                                ${request.name || 'Не указано'}
+                            </div>
+                            <div>
+                                <strong>Телефон:</strong><br>
+                                ${request.phone || 'Не указано'}
+                            </div>
+                            <div>
+                                <strong>Email:</strong><br>
+                                ${request.email || 'Не указано'}
+                            </div>
+                            ${request.position ? `
+                            <div>
+                                <strong>Должность:</strong><br>
+                                ${request.position}
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--oil-gold); margin-bottom: 10px;">Детали заявки</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
                 `;
                 
-                tableBody.appendChild(row);
-            });
-            
-            // Добавляем обработчики кнопок
-            addRowEventListeners();
-        }
-        
-        // Функция обновления статистики
-        function updateStatistics(demoCount, supportCount) {
-            const total = demoCount + supportCount;
-            const today = new Date().toDateString();
-            
-            // Подсчитываем заявки за сегодня
-            let todayCount = 0;
-            const demoRequests = JSON.parse(localStorage.getItem('sync_demo_requests') || '[]');
-            const supportRequests = JSON.parse(localStorage.getItem('sync_support_requests') || '[]');
-            
-            [...demoRequests, ...supportRequests].forEach(request => {
-                const requestDate = new Date(request.timestamp || request.created_at).toDateString();
-                if (requestDate === today) {
-                    todayCount++;
+                if (isDemo) {
+                    detailsHTML += `
+                            <div>
+                                <strong>Количество пользователей:</strong><br>
+                                ${request.users || request.users_count || 'Не указано'}
+                            </div>
+                    `;
                 }
-            });
-            
-            // Обновляем элементы
-            document.getElementById('totalRequests').textContent = total;
-            document.getElementById('demoRequests').textContent = demoCount;
-            document.getElementById('supportRequests').textContent = supportCount;
-            document.getElementById('todayRequests').textContent = todayCount;
-        }
-        
-        // Функция добавления обработчиков к строкам
-        function addRowEventListeners() {
-            // Кнопки просмотра
-            document.querySelectorAll('.view-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    const type = this.getAttribute('data-type');
-                    showRequestDetails(index, type);
-                });
-            });
-            
-            // Кнопки удаления
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    const type = this.getAttribute('data-type');
-                    showConfirmDelete(index, type);
-                });
-            });
-        }
-        
-        // Функция показа деталей заявки
-        function showRequestDetails(index, type) {
-            const requests = JSON.parse(localStorage.getItem(`sync_${type}_requests`) || '[]');
-            
-            if (index >= 0 && index < requests.length) {
-                const request = requests[index];
-                const isDemo = type === 'demo';
                 
-                detailId.textContent = index + 1;
-                
-                // Форматируем дату
-                const date = new Date(request.timestamp || request.created_at);
-                const formattedDate = date.toLocaleDateString('ru-RU', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Создаем HTML для деталей
-                let detailsHTML = `
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                        <div>
-                            <h4 style="color: var(--oil-dark); margin-bottom: 10px; border-bottom: 2px solid var(--oil-light); padding-bottom: 5px;">
-                                <i class="fas fa-user" style="color: var(--oil-gold); margin-right: 8px;"></i>
-                                Контактная информация
-                            </h4>
-                            <p><strong>Имя:</strong> ${escapeHtml(request.full_name || request.name)}</p>
-                            <p><strong>Компания:</strong> ${escapeHtml(request.company)}</p>
-                            ${request.position ? `<p><strong>Должность:</strong> ${escapeHtml(request.position)}</p>` : ''}
-                            <p><strong>Телефон:</strong> ${request.phone}</p>
-                            <p><strong>Email:</strong> ${request.email}</p>
-                        </div>
-                        
-                        <div>
-                            <h4 style="color: var(--oil-dark); margin-bottom: 10px; border-bottom: 2px solid var(--oil-light); padding-bottom: 5px;">
-                                <i class="fas fa-info-circle" style="color: var(--oil-gold); margin-right: 8px;"></i>
-                                Детали
-                            </h4>
-                            <p><strong>Тип заявки:</strong> ${isDemo ? 'Демонстрация' : 'Поддержка'}</p>
-                            <p><strong>Дата:</strong> ${formattedDate}</p>
-                            ${isDemo && request.users_count ? `<p><strong>Пользователей:</strong> ${escapeHtml(request.users_count)}</p>` : ''}
-                            ${isDemo && request.system_type ? `<p><strong>Система:</strong> ${escapeHtml(request.system_type)}</p>` : ''}
-                            ${!isDemo && request.system_type ? `<p><strong>Используемая система:</strong> ${escapeHtml(request.system_type)}</p>` : ''}
+                detailsHTML += `
+                            <div>
+                                <strong>Используемая система:</strong><br>
+                                ${request.system || request.system_type || 'Не указано'}
+                            </div>
                         </div>
                     </div>
                 `;
                 
-                // Добавляем сообщение если есть
-                if (request.message || request.problem_description) {
-                    const message = request.message || request.problem_description;
+                if (request.problem || request.message) {
                     detailsHTML += `
-                        <div style="margin-top: 20px;">
-                            <h4 style="color: var(--oil-dark); margin-bottom: 10px; border-bottom: 2px solid var(--oil-light); padding-bottom: 5px;">
-                                <i class="fas fa-comment" style="color: var(--oil-gold); margin-right: 8px;"></i>
-                                ${isDemo ? 'Сообщение' : 'Описание проблемы'}
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="color: var(--oil-gold); margin-bottom: 10px;">
+                                ${isDemo ? 'Дополнительная информация' : 'Описание проблемы'}
                             </h4>
-                            <div style="background: var(--oil-light); padding: 15px; border-radius: 8px; line-height: 1.6;">
-                                ${escapeHtml(message).replace(/\n/g, '<br>')}
+                            <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #eee;">
+                                ${(request.problem || request.message || 'Нет информации').replace(/\n/g, '<br>')}
                             </div>
                         </div>
                     `;
                 }
                 
-                // Добавляем действия
-                detailsHTML += `
-                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center;">
-                        <button id="callBtn" class="btn btn-primary" style="margin: 5px;">
-                            <i class="fas fa-phone"></i> Позвонить
-                        </button>
-                        <button id="emailBtn" class="btn btn-primary" style="margin: 5px;">
-                            <i class="fas fa-envelope"></i> Написать
-                        </button>
-                        <button id="closeBtn" class="btn btn-secondary" style="margin: 5px;">
-                            <i class="fas fa-times"></i> Закрыть
-                        </button>
+                // История статусов (если есть)
+                if (request.status_history) {
+                    detailsHTML += `
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="color: var(--oil-gold); margin-bottom: 10px;">История статусов</h4>
+                            <div style="background: white; padding: 15px; border-radius: 6px; border: 1px solid #eee;">
+                                ${request.status_history.map(entry => `
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #f5f5f5;">
+                                        <span>${getStatusText(entry.status)}</span>
+                                        <span style="color: var(--oil-steel); font-size: 0.9rem;">${formatDate(entry.date)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                detailsContainer.innerHTML = detailsHTML;
+                modal.style.display = 'flex';
+                
+            } catch (error) {
+                console.error('Ошибка просмотра заявки:', error);
+                document.getElementById('requestDetails').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--oil-fire);"></i>
+                        <p>Ошибка загрузки деталей: ${error.message}</p>
                     </div>
                 `;
-                
-                detailContent.innerHTML = detailsHTML;
-                requestDetails.style.display = 'block';
-                
-                // Прокручиваем к деталям
-                requestDetails.scrollIntoView({ behavior: 'smooth' });
-                
-                // Добавляем обработчики кнопок в деталях
-                setTimeout(() => {
-                    const callBtn = document.getElementById('callBtn');
-                    const emailBtn = document.getElementById('emailBtn');
-                    const closeBtn = document.getElementById('closeBtn');
-                    
-                    if (callBtn) {
-                        callBtn.addEventListener('click', () => {
-                            window.location.href = `tel:${request.phone}`;
-                        });
-                    }
-                    
-                    if (emailBtn) {
-                        emailBtn.addEventListener('click', () => {
-                            window.location.href = `mailto:${request.email}`;
-                        });
-                    }
-                    
-                    if (closeBtn) {
-                        closeBtn.addEventListener('click', () => {
-                            requestDetails.style.display = 'none';
-                        });
-                    }
-                }, 100);
             }
-        }
+        };
         
-        // Функция подтверждения удаления
-        function showConfirmDelete(index, type) {
-            const requests = JSON.parse(localStorage.getItem(`sync_${type}_requests`) || '[]');
+        // Подтверждение удаления
+        window.confirmDelete = function(requestId, type) {
+            currentRequestToDelete = { id: requestId, type: type };
             
-            if (index >= 0 && index < requests.length) {
-                const request = requests[index];
-                const isDemo = type === 'demo';
-                
-                document.getElementById('confirmTitle').textContent = 'Удаление заявки';
-                document.getElementById('confirmMessage').textContent = 
-                    `Вы уверены, что хотите удалить заявку от ${request.full_name || request.name} (${request.company})?`;
-                
-                confirmModal.style.display = 'flex';
-                
-                // Обработчики кнопок модального окна
-                const cancelBtn = document.getElementById('confirmCancelBtn');
-                const okBtn = document.getElementById('confirmOkBtn');
-                
-                const cancelHandler = () => {
-                    confirmModal.style.display = 'none';
-                    cancelBtn.removeEventListener('click', cancelHandler);
-                    okBtn.removeEventListener('click', okHandler);
-                };
-                
-                const okHandler = () => {
-                    deleteRequest(index, type);
-                    confirmModal.style.display = 'none';
-                    cancelBtn.removeEventListener('click', cancelHandler);
-                    okBtn.removeEventListener('click', okHandler);
-                };
-                
-                cancelBtn.addEventListener('click', cancelHandler);
-                okBtn.addEventListener('click', okHandler);
-            }
-        }
+            const request = allRequests.find(r => r.id === requestId && 
+                ((type === 'demo' && r.request_type === 'Демонстрация') || 
+                 (type === 'support' && r.request_type === 'Техподдержка')));
+            
+            const company = request ? request.company : 'Неизвестная компания';
+            
+            document.getElementById('deleteMessage').textContent = 
+                `Вы уверены, что хотите удалить заявку #${requestId} от "${company}"?`;
+            
+            document.getElementById('confirmDeleteModal').style.display = 'flex';
+        };
         
-        // Функция удаления заявки
-        function deleteRequest(index, type) {
-            const key = `sync_${type}_requests`;
-            let requests = JSON.parse(localStorage.getItem(key) || '[]');
-            
-            if (index >= 0 && index < requests.length) {
-                requests.splice(index, 1);
-                localStorage.setItem(key, JSON.stringify(requests));
-                loadAllRequests(); // Перезагружаем таблицу
-                
-                // Показываем уведомление
-                showNotification(`Заявка удалена`, 'success');
-            }
-        }
-        
-        // Функция экспорта данных
-        function exportToExcel() {
-            const demoRequests = JSON.parse(localStorage.getItem('sync_demo_requests') || '[]');
-            const supportRequests = JSON.parse(localStorage.getItem('sync_support_requests') || '[]');
-            
-            const data = {
-                demo_requests: demoRequests,
-                support_requests: supportRequests,
-                export_date: new Date().toISOString(),
-                total_count: demoRequests.length + supportRequests.length
-            };
-            
-            const jsonString = JSON.stringify(data, null, 2);
-            const blob = new Blob
-            const jsonString = JSON.stringify(data, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `sync_requests_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('Данные экспортированы в JSON файл', 'success');
-        }
-        
-        // Функция импорта данных
-        function importFromJson(file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
+        // Удаление заявки
+        async function deleteRequest(requestId, type) {
+            try {
+                if (typeof deleteRequest === 'function') {
+                    await window.deleteRequest(requestId, type);
                     
-                    // Проверяем структуру данных
-                    if (!data.demo_requests || !data.support_requests) {
-                        throw new Error('Неверный формат файла');
-                    }
+                    // Удаляем из локального массива
+                    allRequests = allRequests.filter(r => !(r.id === requestId && 
+                        ((type === 'demo' && r.request_type === 'Демонстрация') || 
+                         (type === 'support' && r.request_type === 'Техподдержка'))));
                     
-                    // Подтверждение перед импортом
-                    document.getElementById('confirmTitle').textContent = 'Импорт данных';
-                    document.getElementById('confirmMessage').textContent = 
-                        `Импортировать ${data.demo_requests.length} демо-заявок и ${data.support_requests.length} обращений в поддержку? Существующие данные будут сохранены.`;
+                    // Обновляем интерфейс
+                    updateStatistics();
+                    renderRequestsTable(allRequests);
                     
-                    confirmModal.style.display = 'flex';
+                    // Закрываем модальное окно
+                    document.getElementById('confirmDeleteModal').style.display = 'none';
                     
-                    const cancelBtn = document.getElementById('confirmCancelBtn');
-                    const okBtn = document.getElementById('confirmOkBtn');
+                    // Показываем уведомление
+                    showNotification('Заявка успешно удалена', 'success');
                     
-                    const cancelHandler = () => {
-                        confirmModal.style.display = 'none';
-                        cancelBtn.removeEventListener('click', cancelHandler);
-                        okBtn.removeEventListener('click', okHandler);
-                    };
-                    
-                    const okHandler = () => {
-                        // Загружаем существующие данные
-                        const existingDemo = JSON.parse(localStorage.getItem('sync_demo_requests') || '[]');
-                        const existingSupport = JSON.parse(localStorage.getItem('sync_support_requests') || '[]');
-                        
-                        // Объединяем с новыми (уникальные по email и дате)
-                        const mergeRequests = (existing, newItems) => {
-                            const combined = [...existing];
-                            
-                            newItems.forEach(newItem => {
-                                // Проверяем, нет ли уже такой заявки
-                                const exists = existing.some(existingItem => 
-                                    existingItem.email === newItem.email && 
-                                    existingItem.timestamp === newItem.timestamp
-                                );
-                                
-                                if (!exists) {
-                                    combined.push(newItem);
-                                }
-                            });
-                            
-                            return combined;
-                        };
-                        
-                        // Сохраняем объединённые данные
-                        localStorage.setItem('sync_demo_requests', JSON.stringify(
-                            mergeRequests(existingDemo, data.demo_requests)
-                        ));
-                        
-                        localStorage.setItem('sync_support_requests', JSON.stringify(
-                            mergeRequests(existingSupport, data.support_requests)
-                        ));
-                        
-                        confirmModal.style.display = 'none';
-                        loadAllRequests(); // Перезагружаем таблицу
-                        
-                        showNotification('Данные успешно импортированы', 'success');
-                        
-                        cancelBtn.removeEventListener('click', cancelHandler);
-                        okBtn.removeEventListener('click', okHandler);
-                    };
-                    
-                    cancelBtn.addEventListener('click', cancelHandler);
-                    okBtn.addEventListener('click', okHandler);
-                    
-                } catch (error) {
-                    showNotification(`Ошибка импорта: ${error.message}`, 'error');
+                } else {
+                    throw new Error('Функция deleteRequest не найдена');
                 }
-            };
-            
-            reader.readAsText(file);
+                
+            } catch (error) {
+                console.error('Ошибка удаления заявки:', error);
+                showNotification('Ошибка удаления заявки: ' + error.message, 'error');
+            }
         }
         
-        // Функция очистки всех данных
-        function clearAllData() {
-            document.getElementById('confirmTitle').textContent = 'Очистка всех данных';
-            document.getElementById('confirmMessage').textContent = 
-                'Вы уверены, что хотите удалить ВСЕ заявки? Это действие нельзя отменить.';
+        // Экспорт в Excel
+        async function exportToExcel() {
+            try {
+                if (allRequests.length === 0) {
+                    showNotification('Нет заявок для экспорта', 'warning');
+                    return;
+                }
+                
+                // Создаём CSV
+                let csv = 'ID;Тип;Статус;Компания;Имя;Должность;Телефон;Email;Система;Пользователи;Сообщение;Дата создания\n';
+                
+                allRequests.forEach(request => {
+                    const row = [
+                        request.id,
+                        request.request_type,
+                        getStatusText(request.status),
+                        `"${(request.company || '').replace(/"/g, '""')}"`,
+                        `"${(request.name || '').replace(/"/g, '""')}"`,
+                        `"${(request.position || '').replace(/"/g, '""')}"`,
+                        `"${(request.phone || '').replace(/"/g, '""')}"`,
+                        `"${(request.email || '').replace(/"/g, '""')}"`,
+                        `"${(request.system || request.system_type || '').replace(/"/g, '""')}"`,
+                        `"${(request.users || request.users_count || '').replace(/"/g, '""')}"`,
+                        `"${((request.problem || request.message || '').replace(/"/g, '""')).replace(/\n/g, ' ')}"`,
+                        formatDate(request.created_at)
+                    ];
+                    
+                    csv += row.join(';') + '\n';
+                });
+                
+                // Создаём Blob и скачиваем
+                const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', `заявки_${new Date().toISOString().slice(0, 10)}.csv`);
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showNotification(`Экспортировано ${allRequests.length} заявок`, 'success');
+                
+            } catch (error) {
+                console.error('Ошибка экспорта:', error);
+                showNotification('Ошибка экспорта: ' + error.message, 'error');
+            }
+        }
+        
+        // Очистка всех заявок
+        async function clearAllRequests() {
+            if (!confirm('Вы уверены, что хотите удалить ВСЕ заявки? Это действие нельзя отменить.')) {
+                return;
+            }
             
-            confirmModal.style.display = 'flex';
-            
-            const cancelBtn = document.getElementById('confirmCancelBtn');
-            const okBtn = document.getElementById('confirmOkBtn');
-            
-            const cancelHandler = () => {
-                confirmModal.style.display = 'none';
-                cancelBtn.removeEventListener('click', cancelHandler);
-                okBtn.removeEventListener('click', okHandler);
-            };
-            
-            const okHandler = () => {
+            try {
+                // Очищаем IndexedDB
+                const db = await initDB();
+                
+                // Очищаем демо-заявки
+                const demoTransaction = db.transaction(['demo_requests'], 'readwrite');
+                const demoStore = demoTransaction.objectStore('demo_requests');
+                demoStore.clear();
+                
+                // Очищаем обращения в поддержку
+                const supportTransaction = db.transaction(['support_requests'], 'readwrite');
+                const supportStore = supportTransaction.objectStore('support_requests');
+                supportStore.clear();
+                
+                // Очищаем localStorage
                 localStorage.removeItem('sync_demo_requests');
                 localStorage.removeItem('sync_support_requests');
-                confirmModal.style.display = 'none';
-                loadAllRequests(); // Перезагружаем таблицу
                 
-                showNotification('Все данные удалены', 'success');
+                // Обновляем интерфейс
+                allRequests = [];
+                updateStatistics();
+                renderRequestsTable(allRequests);
                 
-                cancelBtn.removeEventListener('click', cancelHandler);
-                okBtn.removeEventListener('click', okHandler);
-            };
-            
-            cancelBtn.addEventListener('click', cancelHandler);
-            okBtn.addEventListener('click', okHandler);
+                showNotification('Все заявки очищены', 'success');
+                
+            } catch (error) {
+                console.error('Ошибка очистки заявок:', error);
+                showNotification('Ошибка очистки заявок: ' + error.message, 'error');
+            }
         }
+        
+        // Фильтрация заявок
+        function filterRequests() {
+            const typeFilter = document.getElementById('filterType').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+            const searchFilter = document.getElementById('filterSearch').value.toLowerCase();
+            
+            let filtered = allRequests;
+            
+            // Фильтр по типу
+            if (typeFilter !== 'all') {
+                filtered = filtered.filter(request => 
+                    (typeFilter === 'demo' && request.request_type === 'Демонстрация') ||
+                    (typeFilter === 'support' && request.request_type === 'Техподдержка')
+                );
+            }
+            
+            // Фильтр по статусу
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(request => 
+                    (statusFilter === 'new' && (!request.status || request.status === 'new')) ||
+                    (statusFilter === 'in-progress' && request.status === 'in-progress') ||
+                    (statusFilter === 'completed' && request.status === 'completed')
+                );
+            }
+            
+            // Поиск
+            if (searchFilter) {
+                filtered = filtered.filter(request => 
+                    (request.company && request.company.toLowerCase().includes(searchFilter)) ||
+                    (request.name && request.name.toLowerCase().includes(searchFilter)) ||
+                    (request.email && request.email.toLowerCase().includes(searchFilter))
+                );
+            }
+            
+            renderRequestsTable(filtered);
+        }
+        
+        // Обработчики событий
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', loadRequests);
+        }
+        
+        if (exportBtn) {
+            exportBtn.addEventListener('click', exportToExcel);
+        }
+        
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', clearAllRequests);
+        }
+        
+        if (applyFiltersBtn) {
+            applyFiltersBtn.addEventListener('click', filterRequests);
+        }
+        
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', function() {
+                document.getElementById('filterType').value = 'all';
+                document.getElementById('filterStatus').value = 'all';
+                document.getElementById('filterSearch').value = '';
+                renderRequestsTable(allRequests);
+            });
+        }
+        
+        // Обработчики модальных окон
+        document.getElementById('closeViewModal').addEventListener('click', function() {
+            document.getElementById('viewRequestModal').style.display = 'none';
+        });
+        
+        document.getElementById('closeDetailsBtn').addEventListener('click', function() {
+            document.getElementById('viewRequestModal').style.display = 'none';
+        });
+        
+        document.getElementById('closeDeleteModal').addEventListener('click', function() {
+            document.getElementById('confirmDeleteModal').style.display = 'none';
+        });
+        
+        document.getElementById('cancelDeleteBtn').addEventListener('click', function() {
+            document.getElementById('confirmDeleteModal').style.display = 'none';
+        });
+        
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (currentRequestToDelete) {
+                deleteRequest(currentRequestToDelete.id, currentRequestToDelete.type);
+            }
+        });
+        
+        // Закрытие модальных окон при клике вне
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('viewRequestModal')) {
+                document.getElementById('viewRequestModal').style.display = 'none';
+            }
+            if (e.target === document.getElementById('confirmDeleteModal')) {
+                document.getElementById('confirmDeleteModal').style.display = 'none';
+            }
+        });
         
         // Функция показа уведомления
         function showNotification(message, type = 'info') {
-            // Удаляем старые уведомления
-            const oldNotification = document.querySelector('.notification');
-            if (oldNotification) {
-                oldNotification.remove();
-            }
-            
             const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
+            notification.className = 'notification';
             notification.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
                     <span>${message}</span>
                 </div>
-                <button class="notification-close">
-                    <i class="fas fa-times"></i>
-                </button>
             `;
             
-            // Стили уведомления
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: ${type === 'success' ? 'var(--oil-green)' : type === 'error' ? 'var(--oil-fire)' : 'var(--oil-blue)'};
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
                 color: white;
                 padding: 15px 20px;
                 border-radius: 8px;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                z-index: 1000;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                min-width: 300px;
+                z-index: 10000;
                 animation: slideIn 0.3s ease-out;
             `;
             
             document.body.appendChild(notification);
             
-            // Кнопка закрытия
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.style.cssText = `
-                background: none;
-                border: none;
-                color: white;
-                cursor: pointer;
-                font-size: 1.2rem;
-                margin-left: 15px;
-                opacity: 0.8;
-            `;
-            
-            closeBtn.addEventListener('click', () => {
+            setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-out';
                 setTimeout(() => notification.remove(), 300);
-            });
-            
-            // Автоматическое скрытие
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.animation = 'slideOut 0.3s ease-out';
-                    setTimeout(() => notification.remove(), 300);
-                }
-            }, 5000);
+            }, 3000);
         }
         
-        // Функция экранирования HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        // ===== Обработчики событий =====
-        
-        // Экспорт
-        exportBtn.addEventListener('click', exportToExcel);
-        
-        // Импорт
-        importBtn.addEventListener('click', () => {
-            importModal.style.display = 'flex';
-        });
-        
-        importCancelBtn.addEventListener('click', () => {
-            importModal.style.display = 'none';
-            importFileInput.value = '';
-        });
-        
-        importFileBtn.addEventListener('click', () => {
-            if (importFileInput.files.length > 0) {
-                importFromJson(importFileInput.files[0]);
-                importModal.style.display = 'none';
-                importFileInput.value = '';
-            } else {
-                showNotification('Выберите файл для импорта', 'error');
-            }
-        });
-        
-        // Очистка
-        clearBtn.addEventListener('click', clearAllData);
-        
-        // Обновление
-        refreshBtn.addEventListener('click', () => {
-            loadAllRequests();
-            showNotification('Таблица обновлена', 'info');
-        });
-        
-        // Закрытие деталей
-        closeDetailsBtn.addEventListener('click', () => {
-            requestDetails.style.display = 'none';
-        });
-        
-        // Закрытие модального окна по клику вне его
-        confirmModal.addEventListener('click', (e) => {
-            if (e.target === confirmModal) {
-                confirmModal.style.display = 'none';
-            }
-        });
-        
-        importModal.addEventListener('click', (e) => {
-            if (e.target === importModal) {
-                importModal.style.display = 'none';
-                importFileInput.value = '';
-            }
-        });
-        
-        // Закрытие деталей по ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (requestDetails.style.display === 'block') {
-                    requestDetails.style.display = 'none';
-                }
-                if (confirmModal.style.display === 'flex') {
-                    confirmModal.style.display = 'none';
-                }
-                if (importModal.style.display === 'flex') {
-                    importModal.style.display = 'none';
-                    importFileInput.value = '';
-                }
-            }
-        });
-        
-        // Инициализация при загрузке
-        loadAllRequests();
-        
-        // Добавляем CSS анимации
+        // Добавляем стили для анимаций
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
             }
-            
             @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-            
-            .requests-table {
-                width: 100%;
-                border-collapse: collapse;
-                background: white;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            }
-            
-            .requests-table thead {
-                background: linear-gradient(135deg, var(--oil-dark), #1a365d);
-            }
-            
-            .requests-table th {
-                padding: 15px;
-                text-align: left;
-                color: white;
-                font-weight: 600;
-                border-bottom: 2px solid var(--oil-gold);
-            }
-            
-            .requests-table td {
-                padding: 15px;
-                border-bottom: 1px solid #eee;
-            }
-            
-            .requests-table tr:last-child td {
-                border-bottom: none;
-            }
-            
-            .requests-table tbody tr:hover {
-                background: var(--oil-light);
-                transition: background 0.3s;
-            }
-            
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                padding: 12px 24px;
-                border: none;
-                border-radius: 6px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                text-decoration: none;
-            }
-            
-            .btn-primary {
-                background: var(--oil-blue);
-                color: white;
-            }
-            
-            .btn-primary:hover {
-                background: #2563eb;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            }
-            
-            .btn-secondary {
-                background: var(--oil-steel);
-                color: white;
-            }
-            
-            .btn-secondary:hover {
-                background: #4b5563;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
-            }
-            
-            .modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 1001;
-                align-items: center;
-                justify-content: center;
-                animation: fadeIn 0.3s ease-out;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            .modal-content {
-                background: white;
-                border-radius: 12px;
-                padding: 30px;
-                max-width: 90%;
-                animation: slideUp 0.3s ease-out;
-            }
-            
-            @keyframes slideUp {
-                from {
-                    transform: translateY(50px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-            
-            .view-btn, .delete-btn {
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 0.8rem;
-                transition: all 0.3s;
-            }
-            
-            .view-btn:hover, .delete-btn:hover {
-                transform: scale(1.1);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
             }
         `;
         document.head.appendChild(style);
         
-        console.log('Система заявок инициализирована');
+        // Загружаем заявки при открытии страницы
+        loadRequests();
     });
     </script>
 </body>
