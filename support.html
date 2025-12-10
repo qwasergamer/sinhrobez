@@ -366,7 +366,7 @@
 
     <script src="script.js"></script>
     <script>
-    // ===== JavaScript для обработки формы поддержки с сохранением в SQLite =====
+    // ===== JavaScript для обработки формы поддержки =====
     document.addEventListener('DOMContentLoaded', function() {
         console.log('Страница поддержки загружена');
         
@@ -427,11 +427,6 @@
                 }
                 
                 files.forEach((file, index) => {
-                    if (file.size > 10 * 1024 * 1024) {
-                        alert(`Файл "${file.name}" слишком большой (максимум 10 MB)`);
-                        return;
-                    }
-                    
                     const fileItem = document.createElement('div');
                     fileItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border-radius: 4px; margin-bottom: 5px;';
                     fileItem.innerHTML = `
@@ -463,7 +458,7 @@
             });
         }
         
-        // ===== Обработка отправки формы поддержки в SQLite =====
+        // ===== Обработка отправки формы поддержки =====
         const supportForm = document.getElementById('supportForm');
         const supportSubmitBtn = document.getElementById('supportSubmitBtn');
         
@@ -509,50 +504,87 @@
                 supportSubmitBtn.disabled = true;
                 
                 try {
-                    // Отправляем на PHP обработчик
-                    const response = await fetch('process/support_request.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
+                    // Генерируем номер тикета
+                    const ticketNumber = 'T' + Date.now().toString().slice(-6);
                     
-                    const result = await response.json();
+                    // Сохраняем в localStorage
+                    const saveResult = saveSupportRequest(formData, ticketNumber);
                     
-                    console.log('Ответ от сервера:', result);
-                    
-                    if (result.success) {
-                        // Показываем модальное окно с номером тикета
-                        const ticketNumberSpan = document.getElementById('ticketNumber');
-                        if (ticketNumberSpan && result.ticket_number) {
-                            ticketNumberSpan.textContent = result.ticket_number;
-                        }
-                        
-                        document.getElementById('successModal').style.display = 'flex';
-                        
-                        // Очищаем форму
-                        supportForm.reset();
-                        emailField.value = '';
-                        if (customDomain) customDomain.style.display = 'none';
-                        if (otherDomain) otherDomain.value = '';
-                        if (fileList) fileList.innerHTML = '';
-                        if (fileInput) fileInput.value = '';
-                        
-                        console.log('✅ Обращение сохранено в SQLite, тикет:', result.ticket_number);
-                    } else {
-                        const errorMsg = result.error || result.errors?.join(', ') || 'Неизвестная ошибка';
-                        alert('❌ Ошибка отправки: ' + errorMsg);
+                    // Показываем модальное окно с номером тикета
+                    const ticketNumberSpan = document.getElementById('ticketNumber');
+                    if (ticketNumberSpan) {
+                        ticketNumberSpan.textContent = ticketNumber;
                     }
+                    
+                    document.getElementById('successModal').style.display = 'flex';
+                    
+                    // Очищаем форму
+                    supportForm.reset();
+                    emailField.value = '';
+                    if (customDomain) customDomain.style.display = 'none';
+                    if (otherDomain) otherDomain.value = '';
+                    if (fileList) fileList.innerHTML = '';
+                    if (fileInput) fileInput.value = '';
+                    
+                    console.log('✅ Обращение сохранено, тикет:', ticketNumber);
+                    
+                    // Отправка через mailto как резервный вариант
+                    const backupEmail = `mailto:vladimir_minkov@mail.ru?subject=Обращение в поддержку #${ticketNumber}&body=${encodeURIComponent(
+                        `Новое обращение в поддержку #${ticketNumber}:\n\n` +
+                        `Имя: ${formData.name}\n` +
+                        `Компания: ${formData.company}\n` +
+                        `Телефон: ${formData.phone}\n` +
+                        `Email: ${formData.email}\n` +
+                        `Система: ${formData.system || 'Не указана'}\n` +
+                        `Проблема: ${formData.problem}\n\n` +
+                        `---\nДата: ${new Date().toLocaleString()}`
+                    )}`;
+                    
+                    // Предлагаем отправить через почту
+                    setTimeout(() => {
+                        if (confirm('Обращение сохранено! Открыть почтовый клиент для отправки?')) {
+                            window.location.href = backupEmail;
+                        }
+                    }, 500);
+                    
                 } catch (error) {
-                    console.error('Ошибка сети:', error);
-                    alert('❌ Ошибка сети. Проверьте подключение к интернету.');
+                    console.error('Ошибка:', error);
+                    alert('❌ Ошибка при сохранении обращения');
                 } finally {
                     // Восстанавливаем кнопку
                     supportSubmitBtn.innerHTML = originalText;
                     supportSubmitBtn.disabled = false;
                 }
             });
+        }
+        
+        // Функция сохранения в localStorage
+        function saveSupportRequest(formData, ticketNumber) {
+            try {
+                let requests = JSON.parse(localStorage.getItem('sync_support_requests') || '[]');
+                
+                formData.ticket_number = ticketNumber;
+                formData.timestamp = new Date().toISOString();
+                formData.created_at = formData.timestamp;
+                formData.type = 'support';
+                formData.id = Date.now();
+                
+                requests.push(formData);
+                
+                if (requests.length > 100) {
+                    requests = requests.slice(-50);
+                }
+                
+                localStorage.setItem('sync_support_requests', JSON.stringify(requests));
+                
+                console.log('Обращение в поддержку сохранено:', formData);
+                console.log('Всего обращений:', requests.length);
+                
+                return { success: true, count: requests.length };
+            } catch (error) {
+                console.error('Ошибка сохранения:', error);
+                return { success: false, error: error.message };
+            }
         }
         
         // Удалённая помощь
